@@ -1,4 +1,11 @@
 # lane_detectors
+
+## Introduction
+This project aims to integrate multiple lane detection algorithms:
+* lane_detector_a: it is based on the Canny edge detector and the Hough transform. The codes were refactored and revised from the post below:
+https://medium.com/analytics-vidhya/building-a-lane-detection-system-f7a727c6694
+
+
 ## Environment Setup
 ```shell
 conda env create -n lane_detect python=3.6.5
@@ -15,7 +22,8 @@ http://youtube.com/watch?v=U-9Yr_tCuu4
 ```
 INPUT_FILE=path_to_your_video # or to a image or a folder of images
 SAVE=folder_to_save_the_detection_results
-python main.py --input $INPUT_FILE --save_path $SAVE
+DETECTOR=a # only detector a is available for now
+python main.py --detector $DETECTOR --input $INPUT_FILE --save_path $SAVE
 ```
 
 2. click on the pop-up image to choose the vertices of a polygon enclosing the lanes (press "y" when finished)
