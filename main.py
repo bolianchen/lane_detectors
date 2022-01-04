@@ -44,7 +44,8 @@ def main(args):
 
         # draw and save images
         plt.imshow(img)
-        plt.draw(), plt.pause(0.1)
+        plt.axis('off')
+        plt.draw(), plt.pause(0.05)
         if args.save_path:
             if not os.path.exists(args.save_path):
                 os.makedirs(args.save_path)
