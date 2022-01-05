@@ -43,6 +43,7 @@ def main(args):
         img = DETECTORS[args.detector](img, polygon_selector)
 
         # draw and save images
+        plt.cla()
         plt.imshow(img)
         plt.axis('off')
         plt.tight_layout()
