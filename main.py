@@ -45,6 +45,7 @@ def main(args):
         # draw and save images
         plt.imshow(img)
         plt.axis('off')
+        plt.tight_layout()
         plt.draw()
         if not args.not_display:
             plt.pause(0.1)
