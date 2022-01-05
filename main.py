@@ -45,7 +45,9 @@ def main(args):
         # draw and save images
         plt.imshow(img)
         plt.axis('off')
-        plt.draw(), plt.pause(0.05)
+        plt.draw()
+        if not args.not_display:
+            plt.pause(0.1)
         if args.save_path:
             if not os.path.exists(args.save_path):
                 os.makedirs(args.save_path)
@@ -67,5 +69,10 @@ if __name__ == '__main__':
                            type=str,
                            default='',
                            help='folder to save the detection results')
+    argparser.add_argument('--not_display',
+                           action='store_true',
+                           help='turn off displaying images while running '
+                                'detection')
+
     args = argparser.parse_args()
     main(args)
