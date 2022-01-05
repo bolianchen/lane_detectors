@@ -1,5 +1,6 @@
 import os
 import cv2
+import glob
 
 def is_a_file(target_file, exts):
     """Check if exts contain the type of the target_file"""
@@ -43,7 +44,7 @@ class ImageReader:
             # case sensitive to img_types
             for img_type in img_types:
                 self.img_paths.extend(
-                        glob.glob(os.path.join(file_path, img_type))
+                        glob.glob(os.path.join(file_path, '*' + img_type))
                         )
             self.img_paths = sorted(self.img_paths)
 

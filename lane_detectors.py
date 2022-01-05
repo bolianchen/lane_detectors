@@ -1,9 +1,9 @@
 import numpy as np
 import cv2
-from image_processing import img_reader, rgb2gray, find_lanes, \
-                             display_lines 
+from image_processing import img_reader, gen_color_mask, rgb2gray, \
+                             find_lanes, display_lines 
 
-def lane_detector_a(img, polygon_selector):
+def lane_detector_a(img, polygon_selector, lane_colors=[]):
     """ Detect car lanes on a input img
     This detector is made by revising codes from:
     https://medium.com/analytics-vidhya/building-a-lane-detection\
@@ -19,6 +19,8 @@ def lane_detector_a(img, polygon_selector):
 
     args:
         img: a numpy array or the path to an image
+        polygon_selector: a function to let users select a polygon
+        lane_colors: possible lane colors
     """
 
     if not isinstance(img, np.ndarray):
@@ -26,15 +28,22 @@ def lane_detector_a(img, polygon_selector):
 
     img = np.copy(img)
     gray = rgb2gray(img)
+
     # selection of the Gaussian kernel size would affect
     # the performance
     gaus_blur = cv2.GaussianBlur(gray, (5,5), 0)
     edges = cv2.Canny(gaus_blur, 50, 150)
     polygon = polygon_selector(edges)
+    if lane_colors:
+        color_mask = gen_color_mask(img, colors=lane_colors)
+        polygon = cv2.bitwise_and(polygon, color_mask)
     lines = cv2.HoughLinesP(
             polygon, 2, np.pi/180, 100,
-            np.array([]), minLineLength=40, maxLineGap=5)
-    lanes = find_lanes(img, lines)
-    red_lines = display_lines(img, lanes)
-    lanes = cv2.addWeighted(img, 0.8, red_lines, 1, 1)
+            np.array([]), minLineLength=40, maxLineGap=20)
+    if lines is None:
+        print('no car lanes detected')
+        return img
+    lane_endpts = find_lanes(img, lines)
+    lanes_in_red = display_lines(img, lane_endpts)
+    lanes = cv2.addWeighted(img, 0.8, lanes_in_red, 1, 1)
     return lanes
