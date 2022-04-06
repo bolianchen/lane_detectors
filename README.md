@@ -8,7 +8,7 @@ https://medium.com/analytics-vidhya/building-a-lane-detection-system-f7a727c6694
 
 ## Environment Setup
 ```shell
-conda env create -n lane_detect python=3.6.5
+conda create -n lane_detect python=3.6.5
 conda activate lane_detect
 conda install -c menpo opencv
 conda install matplotlib
